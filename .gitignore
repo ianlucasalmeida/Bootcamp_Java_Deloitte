@@ -1,0 +1,19 @@
+# Arquivos compilados do Java
+*.class
+
+# Pastas de compilação geradas por IDEs
+bin/
+out/
+target/
+
+# Configurações do VS Code e outras IDEs
+.vscode/
+.classpath
+.project
+.settings/
+.metadata/
+
+# Arquivos de Log e Sistema Operacional
+*.log
+.DS_Store
+Thumbs.db
