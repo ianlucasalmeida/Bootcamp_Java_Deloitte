@@ -3,8 +3,11 @@ package com.deloitte.pecaja.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,19 +19,32 @@ import com.deloitte.pecaja.api.repository.ClienteRepository;
 @RequestMapping("/clientes") 
 public class ClienteController {
 
-    @Autowired // O Spring injeta o banco de dados aqui automaticamente
+    @Autowired
     private ClienteRepository clienteRepository;
 
-    // Substitui o antigo "Cadastrar Cliente"
     @PostMapping
     public Cliente criarCliente(@RequestBody Cliente cliente) {
-        
         return clienteRepository.save(cliente); 
     }
 
-    // Substitui o antigo "Listar Clientes"
     @GetMapping
     public List<Cliente> listarClientes() {
         return clienteRepository.findAll(); 
+    }
+
+    @PutMapping("/{id}")
+    public Cliente atualizarCliente(@PathVariable Integer id, @RequestBody Cliente clienteAtualizado) {
+        // Busca a entidade real para garantir que ela existe antes de atualizar
+        Cliente clienteExistente = clienteRepository.findById(id).orElseThrow();
+        
+        clienteExistente.setNome(clienteAtualizado.getNome());
+        clienteExistente.setEmail(clienteAtualizado.getEmail());
+        
+        return clienteRepository.save(clienteExistente);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletarCliente(@PathVariable Integer id) {
+        clienteRepository.deleteById(id);
     }
 }
