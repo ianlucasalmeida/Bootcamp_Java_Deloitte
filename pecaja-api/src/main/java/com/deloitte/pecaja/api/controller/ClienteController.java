@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.deloitte.pecaja.api.model.Cliente;
 import com.deloitte.pecaja.api.repository.ClienteRepository;
+import com.deloitte.pecaja.api.service.ClienteService;
 
 @RestController 
 @RequestMapping("/clientes") 
@@ -22,9 +23,14 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    
+    @Autowired
+    private ClienteService clienteService;
+
     @PostMapping
     public Cliente criarCliente(@RequestBody Cliente cliente) {
-        return clienteRepository.save(cliente); 
+        
+        return clienteService.criarCliente(cliente); 
     }
 
     @GetMapping
@@ -34,7 +40,7 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     public Cliente atualizarCliente(@PathVariable Integer id, @RequestBody Cliente clienteAtualizado) {
-        // Busca a entidade real para garantir que ela existe antes de atualizar
+        
         Cliente clienteExistente = clienteRepository.findById(id).orElseThrow();
         
         clienteExistente.setNome(clienteAtualizado.getNome());
