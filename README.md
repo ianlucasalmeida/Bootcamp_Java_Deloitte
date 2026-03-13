@@ -1,71 +1,316 @@
-# Bootcamp Java Deloitte
+# Peça Já — API de Gestão de Autopeças
 
-# CRUD de Clientes - Java Puro (Bootcamp Deloitte)
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/SpringBoot-3.x-brightgreen)
+![Maven](https://img.shields.io/badge/Maven-Build-red)
+![Architecture](https://img.shields.io/badge/Architecture-SOLID-blue)
+![Status](https://img.shields.io/badge/status-active-success)
+![JUnit](https://img.shields.io/badge/Tests-JUnit5-blue)
+![Mockito](https://img.shields.io/badge/Tests-Mockito-green)
 
-Este é um projeto de sistema de cadastro de clientes (CRUD) desenvolvido em Java Puro (Java SE) rodando no terminal. O projeto utiliza `ArrayList` para gerenciar os dados em memória, focando nos conceitos de Programação Orientada a Objetos e controle de fluxo.
+API REST desenvolvida em **Java com Spring Boot** para simular o backend de um sistema de **gestão de autopeças**.  
+A aplicação permite o gerenciamento de **clientes, catálogo de produtos e vendas**, aplicando princípios de engenharia de software voltados à **modularidade, extensibilidade e organização arquitetural**.
 
-## 📁 Estrutura do Projeto
+O projeto foi estruturado aplicando conceitos de **SOLID**, com foco nos princípios:
 
-O projeto segue a padronização de pacotes do Java (`com.deloitte.cadastro`):
+- **SRP (Single Responsibility Principle)**
+- **OCP (Open Closed Principle)**
+
+---
+
+# Sumário
+
+- Visão Geral
+- Arquitetura
+- Estrutura do Projeto
+- Princípios SOLID Aplicados
+- Estratégia de Branches
+- Tecnologias Utilizadas
+- Como Executar
+- Endpoints
+
+---
+
+# Visão Geral
+
+O **Peça Já** representa a camada de backend de um sistema de vendas de autopeças.
+
+A API permite:
+
+- cadastro e gerenciamento de clientes
+- consulta de catálogo de produtos
+- registro de vendas
+- validação de dados críticos
+
+As validações foram implementadas de forma modular, permitindo que novas regras possam ser adicionadas sem modificar código existente.
+
+---
+
+# Arquitetura
+
+A aplicação segue uma arquitetura em camadas típica de aplicações **Spring Boot**:
+
+```
+Controller → Service → Validation → Repository → Database
+```
+
+### Controller
+
+Responsável pela exposição dos endpoints REST.
+
+```
+CatalogoController
+ClienteController
+VendaController
+```
+
+---
+
+### Service
+
+Camada responsável pela lógica de negócio da aplicação.
+
+```
+ClienteService
+```
+
+Coordena:
+
+- execução de validações
+- regras de negócio
+- persistência de dados
+
+---
+
+### Repository
+
+Camada responsável pela comunicação com o banco de dados utilizando **Spring Data JPA**.
+
+```
+ClienteRepository
+ProdutoRepository
+VendaRepository
+```
+
+---
+
+### Validation
+
+Módulo responsável pelas validações aplicadas à entidade **Cliente**.
+
+Cada validação foi separada em uma classe específica.
+
+```
+CpfValidation
+EmailValidation
+EmailUnicoValidation
+NomeValidation
+TelefoneValidation
+```
+
+Todas implementam a interface:
+
+```
+ClienteValidation
+```
+
+---
+
+# Estrutura do Projeto
 
 ```text
-.
-├── README.md
-└── src
-    └── com
-        └── deloitte
-            └── cadastro
-                ├── Cliente.java
-                └── Main.java
+Bootcamp_Java_Deloitte
+│
+├── pecaja-api
+│   ├── pom.xml
+│   ├── mvnw
+│   ├── src
+│   │
+│   │   ├── main/java/com/deloitte/pecaja/api
+│   │   │
+│   │   │   ├── controller
+│   │   │   │   ├── CatalogoController.java
+│   │   │   │   ├── ClienteController.java
+│   │   │   │   └── VendaController.java
+│   │   │   │
+│   │   │   ├── email
+│   │   │   │   └── EmailService.java
+│   │   │   │
+│   │   │   ├── model
+│   │   │   │   ├── Cliente.java
+│   │   │   │   ├── Peca.java
+│   │   │   │   ├── Produto.java
+│   │   │   │   ├── Servico.java
+│   │   │   │   └── Venda.java
+│   │   │   │
+│   │   │   ├── repository
+│   │   │   │   ├── ClienteRepository.java
+│   │   │   │   ├── ProdutoRepository.java
+│   │   │   │   └── VendaRepository.java
+│   │   │   │
+│   │   │   ├── service
+│   │   │   │   └── ClienteService.java
+│   │   │   │
+│   │   │   └── validation
+│   │   │       ├── ClienteValidation.java
+│   │   │       ├── CpfValidation.java
+│   │   │       ├── EmailUnicoValidation.java
+│   │   │       ├── EmailValidation.java
+│   │   │       ├── NomeValidation.java
+│   │   │       └── TelefoneValidation.java
+│   │   │
+│   │   └── resources
+│   │       └── application.properties
+│   │
+│   └── test/java/com/deloitte/pecaja/api
+│       └── PecajaApiApplicationTests.java
 ```
 
-## 🚀 Como executar o projeto (Terminal Linux/Mac/Windows)
+---
 
-Para compilar e rodar o projeto corretamente sem erros de pacote (`Incorrect Package`), siga os passos abaixo no seu terminal.
+# Princípios SOLID Aplicados
 
-**1. Abra o terminal na raiz do projeto e acesse a pasta `src`:**
+## SRP — Single Responsibility Principle
+
+Cada classe possui uma única responsabilidade.
+
+| Classe | Responsabilidade |
+|------|------|
+CpfValidation | validação de CPF |
+EmailValidation | validação de formato de email |
+EmailUnicoValidation | verificação de unicidade do email |
+NomeValidation | validação de nome |
+TelefoneValidation | validação de telefone |
+
+Essa separação torna o sistema:
+
+- mais modular
+- mais testável
+- mais fácil de manter
+
+---
+
+## OCP — Open Closed Principle
+
+O sistema foi projetado para permitir **extensão sem modificação do código existente**.
+
+Isso foi implementado por meio da interface:
+
+```
+ClienteValidation
+```
+
+Novas validações podem ser adicionadas simplesmente criando novas implementações:
+
+```
+class NovaValidacao implements ClienteValidation
+```
+
+Sem necessidade de alterar as classes existentes.
+
+---
+
+# Estratégia de Branches
+
+O repositório foi organizado em três branches principais que representam a evolução do desenvolvimento.
+
+### main
+
+Branch principal contendo a versão consolidada da aplicação com arquitetura modular e aplicação dos princípios SOLID.
+
+---
+
+### testes
+
+Branch utilizada para experimentação inicial e implementação de funcionalidades básicas.
+
+Características:
+
+- estrutura mais simples
+- menor separação de responsabilidades
+
+---
+
+### testes-solid
+
+Branch dedicada à implementação e experimentação dos princípios **SOLID**.
+
+Principais mudanças:
+
+- criação da interface `ClienteValidation`
+- separação das validações em classes independentes
+- introdução da camada `Service`
+
+---
+
+# Tecnologias Utilizadas
+
+- Java 21
+- Spring Boot
+- Spring Data JPA
+- H2 Database
+- Maven
+
+Ferramentas de desenvolvimento:
+
+- Git
+- Postman
+- VS Code / IntelliJ
+
+---
+
+# Como Executar
+
+Clone o repositório:
+
 ```bash
-cd src
+git clone https://github.com/ianlucasalmeida/Bootcamp_Java_Deloitte.git
 ```
 
-**2. Compile os arquivos Java:**
-Este comando irá gerar os arquivos `.class` compilados dentro da mesma estrutura de pastas.
-```bash
-javac com/deloitte/cadastro/*.java
-```
-
-**3. Execute o programa principal:**
-No Java, você deve chamar o arquivo usando o nome completo do pacote a partir da pasta `src`.
-```bash
-java com.deloitte.cadastro.Main
-```
-
-## 💻 Como executar via VS Code
-
-Se preferir rodar direto pela interface do VS Code:
-1. Certifique-se de ter o **Extension Pack for Java** instalado.
-2. Abra o arquivo `Main.java`.
-3. Verifique se a primeira linha contém exatamente `package com.deloitte.cadastro;`.
-4. Clique no botão **"Run"** (ou "Executar") que aparece logo acima do método `public static void main`.
-
-## 🔄 Como versionar e enviar o código (Git)
-
-Para salvar suas alterações e enviá-las para o repositório remoto no GitHub, certifique-se de estar na raiz do projeto e execute:
+Acesse o diretório da aplicação:
 
 ```bash
-# 1. Adiciona todos os arquivos modificados e novos (incluindo este README)
-git add .
-
-# 2. Cria um commit com uma mensagem clara sobre a atualização
-git commit -m "docs: atualiza README com instrucoes de execucao e comandos git"
-
-# 3. Envia o código para a branch main no GitHub
-git push origin main
+cd pecaja-api
 ```
-*(Nota: Caso ocorra um erro de "Internal Server Error 500" durante o push, aguarde alguns instantes e tente o comando de push novamente, pois isso geralmente indica instabilidade temporária no GitHub).*
 
-## 🛠️ Tecnologias Utilizadas
+Execute o projeto:
 
-* Java SE (JDK 8 ou superior)
-* Scanner (Entrada de dados)
-* ArrayList (Armazenamento em memória)
+```bash
+./mvnw spring-boot:run
+```
+
+A aplicação será iniciada em:
+
+```
+http://localhost:8080
+```
+
+---
+
+# Endpoints Principais
+
+### Clientes
+
+```
+GET /clientes
+POST /clientes
+PUT /clientes/{id}
+DELETE /clientes/{id}
+```
+
+---
+
+### Catálogo
+
+```
+GET /catalogo
+```
+
+---
+
+### Vendas
+
+```
+POST /vendas
+GET /vendas
+```
