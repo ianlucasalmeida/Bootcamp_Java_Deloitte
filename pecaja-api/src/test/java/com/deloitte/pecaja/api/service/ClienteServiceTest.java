@@ -41,7 +41,7 @@ class ClienteServiceTest {
         
         Cliente cliente = new Cliente();
         cliente.setNome("Ian Almeida");
-        cliente.setEmail("ian@deloitte.com");
+        cliente.setEmail("ian@teste.com");
 
         when(clienteRepository.save(any(Cliente.class))).thenReturn(cliente);
 
@@ -51,7 +51,7 @@ class ClienteServiceTest {
         
         assertNotNull(salvo);
         assertEquals("Ian Almeida", salvo.getNome());
-        
+        assertEquals("ian@teste.com", salvo.getEmail());
         
         verify(clienteRepository, times(1)).save(cliente);
         verify(emailService, times(1)).enviarEmailBoasVindas(cliente);

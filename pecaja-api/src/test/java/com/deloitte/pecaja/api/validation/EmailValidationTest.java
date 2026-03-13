@@ -13,7 +13,7 @@ class EmailValidationTest {
     @Test
     void deveValidarEmailCorretoSemErro() {
         Cliente cliente = new Cliente();
-        cliente.setEmail("ian@deloitte.com");
+        cliente.setEmail("ian@teste.com");
         
         assertDoesNotThrow(() -> validation.validar(cliente));
     }
@@ -21,7 +21,7 @@ class EmailValidationTest {
     @Test
     void deveLancarExcecaoParaEmailSemArroba() {
         Cliente cliente = new Cliente();
-        cliente.setEmail("ian.deloitte.com"); 
+        cliente.setEmail("ian.teste.com"); 
         
         assertThrows(RuntimeException.class, () -> validation.validar(cliente));
     }
