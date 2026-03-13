@@ -23,13 +23,11 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    
     @Autowired
     private ClienteService clienteService;
 
     @PostMapping
     public Cliente criarCliente(@RequestBody Cliente cliente) {
-        
         return clienteService.criarCliente(cliente); 
     }
 
@@ -46,11 +44,21 @@ public class ClienteController {
         clienteExistente.setNome(clienteAtualizado.getNome());
         clienteExistente.setEmail(clienteAtualizado.getEmail());
         
+        
+        clienteExistente.setCpf(clienteAtualizado.getCpf());
+        clienteExistente.setTelefone(clienteAtualizado.getTelefone());
+        
         return clienteRepository.save(clienteExistente);
     }
 
     @DeleteMapping("/{id}")
     public void deletarCliente(@PathVariable Integer id) {
+        // Varrendo se o cliente existe, se não existir, lança uma exceção
+        if (!clienteRepository.existsById(id)) {
+            throw new RuntimeException("Cliente não encontrado para exclusão!");
+        }
+        
+        // Se existir, aí sim nós deletado!
         clienteRepository.deleteById(id);
     }
 }
