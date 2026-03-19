@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap');
+
+:root {
+    --verde-pecaja: #85bb23;
+    --preto-fundo: #121212;
+    --preto-header: #1e1e1e;
+    --borda: #333;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: var(--preto-fundo);
+    color: #f0f0f0;
+    margin: 0;
+}
+
+/* Header Estilo Imagem */
+.navbar-matriz {
+    background-color: var(--preto-header);
+    border-bottom: 1px solid var(--borda);
+    padding: 1rem 2rem;
+}
+
+.nav-link-custom {
+    color: #888;
+    text-align: center;
+    font-size: 0.8rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.nav-link-custom i { font-size: 1.5rem; margin-bottom: 4px; }
+.nav-link-custom:hover, .nav-link-custom.active { color: var(--verde-pecaja); }
+
+/* Containers e Grid */
+.main-container { padding: 3rem 1rem; }
+
+.card-pecaja {
+    background-color: var(--preto-header);
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    padding: 1.5rem;
+    height: 100%;
+    transition: 0.3s;
+}
+
+.card-pecaja:hover { border-color: var(--verde-pecaja); transform: translateY(-3px); }
+
+.btn-verde {
+    background-color: var(--verde-pecaja);
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+}
+
+.form-control-dark {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    color: white;
+}
+
+.form-control-dark:focus {
+    background-color: #333;
+    border-color: var(--verde-pecaja);
+    color: white;
+    box-shadow: none;
+}

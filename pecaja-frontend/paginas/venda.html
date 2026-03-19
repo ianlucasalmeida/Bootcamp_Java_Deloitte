@@ -1,0 +1,33 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="section-title text-white fw-bold mb-4">Registrar Nova Venda</h2>
+        <div class="card-pecaja border-verde">
+            <form id="formVenda" class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label text-white fw-bold">ID do Cliente</label>
+                    <input type="number" id="venda-cliente-id" class="form-control form-control-dark text-white fw-bold" 
+                           min="1" placeholder="Ex: 1" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label text-white fw-bold">ID do Produto / Peça</label>
+                    <input type="number" id="venda-produto-id" class="form-control form-control-dark text-white fw-bold" 
+                           min="1" placeholder="Ex: 5" required>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <label class="form-label text-white fw-bold">Quantidade</label>
+                    <input type="number" id="venda-quantidade" class="form-control form-control-dark text-white fw-bold text-center" 
+                           value="1" min="1" max="100" required>
+                </div>
+                
+                <div class="col-12 mt-5">
+                    <button type="button" class="btn btn-verde w-100 fw-bold fs-5 p-3" onclick="salvarNovaVenda()">
+                        <i class="bi bi-cart-check-fill me-2"></i>PROCESSAR VENDA
+                    </button>
+                    <p class="text-center text-light mt-3 small">
+                        Certifique-se de que os IDs existem no Catálogo e na Lista de Clientes.
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
