@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap');
+
+:root {
+    --verde-pecaja: #85bb23;
+    --preto-fundo: #121212;
+    --preto-header: #1e1e1e;
+    --borda: #333;
+    --fundo-card: #1e1e1e; /* Adicionado para consistência com os modais */
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: var(--preto-fundo);
+    color: #f0f0f0;
+    margin: 0;
+    overflow-x: hidden; /* Evita rolagem horizontal indesejada */
+}
+
+/* --- HEADER ESTILO MATRIZ --- */
+.navbar-matriz {
+    background-color: var(--preto-header);
+    border-bottom: 1px solid var(--borda);
+    padding: 1rem 2rem;
+    transition: all 0.3s ease;
+}
+
+.nav-link-custom {
+    color: #ffffff;
+    text-align: center;
+    font-size: 0.8rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.nav-link-custom i { 
+    font-size: 1.5rem; 
+    margin-bottom: 4px; 
+}
+
+.nav-link-custom:hover, 
+.nav-link-custom.active { 
+    color: var(--verde-pecaja); 
+}
+
+/* --- CONTAINERS E GRID --- */
+.main-container { 
+    padding: 2rem 1rem; 
+}
+
+.card-pecaja {
+    background-color: var(--preto-header);
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    padding: 1.5rem;
+    height: 100%;
+    transition: 0.3s;
+}
+
+.card-pecaja:hover { 
+    border-color: var(--verde-pecaja); 
+    transform: translateY(-3px); 
+}
+
+/* --- COMPONENTES --- */
+.btn-verde {
+    background-color: var(--verde-pecaja);
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.btn-verde:hover {
+    filter: brightness(1.1);
+    color: white;
+}
+
+.form-control-dark {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    color: white !important;
+}
+
+.form-control-dark:focus {
+    background-color: #333;
+    border-color: var(--verde-pecaja);
+    color: white;
+    box-shadow: none;
+}
+
+/* ============================================================
+   RESPONSIVIDADE (MEDIA QUERIES)
+   ============================================================ */
+
+/* Ajuste para Tablets e Celulares Grandes (Lado a lado vira empilhado) */
+@media (max-width: 992px) {
+    .navbar-matriz {
+        flex-direction: column; /* Logo em cima, Menu embaixo */
+        padding: 1rem;
+        height: auto;
+    }
+
+    .navbar-matriz nav {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap; /* Permite que os botões quebrem linha se faltar espaço */
+        margin-top: 1.2rem;
+        gap: 10px;
+    }
+
+    .nav-link-custom {
+        margin: 5px;
+        font-size: 0.75rem;
+    }
+
+    .nav-link-custom i {
+        font-size: 1.3rem;
+    }
+}
+
+/* Ajuste para Celulares Médios/Pequenos */
+@media (max-width: 576px) {
+    .main-container {
+        padding: 1rem 0.5rem;
+    }
+
+    .navbar-matriz .logo span {
+        font-size: 1.2rem !important; /* Diminui o texto da logo no celular */
+    }
+
+    .nav-link-custom {
+        flex: 1 0 30%; /* Tenta manter 3 itens por linha no menu */
+        margin: 2px;
+    }
+
+    /* Melhora o espaçamento dos modais no mobile */
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+}
