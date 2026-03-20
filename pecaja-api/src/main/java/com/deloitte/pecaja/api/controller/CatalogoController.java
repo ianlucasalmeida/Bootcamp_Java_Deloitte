@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,25 +26,46 @@ public class CatalogoController {
     @Autowired
     private ProdutoRepository produtoRepository;
     
-    // Lista todo o catálogo (Peças e Serviços misturados - Polimorfismo)
+    
+    public static class ProdutoUpdateDTO {
+        private String descricao;
+        private Double precoBase;
+
+        public String getDescricao() { return descricao; }
+        public void setDescricao(String descricao) { this.descricao = descricao; }
+        public Double getPrecoBase() { return precoBase; }
+        public void setPrecoBase(Double precoBase) { this.precoBase = precoBase; }
+    }
+
+    
     @GetMapping
     public List<Produto> listarCatalogo() {
         return produtoRepository.findAll();
     }
 
-    // Rota específica para cadastrar uma Peça
+    
     @PostMapping("/pecas")
     public Produto cadastrarPeca(@RequestBody Peca peca) {
         return produtoRepository.save(peca);
     }
 
-    // Rota específica para cadastrar um Serviço
+    
     @PostMapping("/servicos")
     public Produto cadastrarServico(@RequestBody Servico servico) {
         return produtoRepository.save(servico);
     }
 
-    // Deleta um Produto (Peça ou Serviço) através do ID passado na URL
+    
+    @PutMapping("/{id}")
+    public Produto editarProduto(@PathVariable Integer id, @RequestBody ProdutoUpdateDTO dadosAtualizados) {
+        return produtoRepository.findById(id).map(produtoExistente -> {
+            produtoExistente.setDescricao(dadosAtualizados.getDescricao());
+            produtoExistente.setPrecoBase(dadosAtualizados.getPrecoBase());
+            return produtoRepository.save(produtoExistente);
+        }).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+    }
+
+    
     @DeleteMapping("/{id}")
     public void deletarProduto(@PathVariable Integer id) {
         produtoRepository.deleteById(id);
